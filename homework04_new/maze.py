@@ -64,10 +64,7 @@ def bin_tree_maze(
         y_out = randint(0, cols - 1) if x_out in (0, rows - 1) else choice((0, cols - 1))
     else:
         x_in, y_in = 0, cols - 2
-        x_out, y_out = rows - 1, 1
-
-    grid[x_in][y_in], grid[x_out][y_out] = "X", "X"
-    """if random_exit:
+        
         for i in range(2):
             exit_wall = randint(0, 3)
             if exit_wall == 0:
