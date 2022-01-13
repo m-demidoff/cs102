@@ -8,7 +8,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     >>> encrypt_vigenere("ATTACKATDAWN", "LEMON")
     'LXFOPVEFRNHR'
     """
-    kw = []
+    kw = []  # type: str
     a = 0
     ciphertext = ""
     for i in keyword:
@@ -41,7 +41,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
     'ATTACKATDAWN'
     """
-    kw = []
+    kw = []  # type: str
     a = 0
     plaintext = ""
     for i in keyword:
