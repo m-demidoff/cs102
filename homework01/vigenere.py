@@ -1,7 +1,6 @@
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
     Encrypts plaintext using a Vigenere cipher.
-
     >>> encrypt_vigenere("PYTHON", "A")
     'PYTHON'
     >>> encrypt_vigenere("python", "a")
@@ -9,27 +8,25 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     >>> encrypt_vigenere("ATTACKATDAWN", "LEMON")
     'LXFOPVEFRNHR'
     """
-    ciphertext = ""
-    k = 0
-    while len(keyword) < len(plaintext):
-        keyword += keyword[k % len(keyword)]
-        k += 1
-    alpha_s = [chr(x) for x in range(ord("a"), ord("z") + 1)]
-    alpha_c = [chr(x) for x in range(ord("A"), ord("Z") + 1)]
-    for i in range(len(plaintext)):
-        key = keyword[i]
-        shift = 0
-        if key in alpha_c:
-            shift = alpha_c.index(key)
-        elif key in alpha_s:
-            shift = alpha_s.index(key)
-        symb = plaintext[i]
-        if symb in alpha_s:
-            ciphertext += alpha_s[(alpha_s.index(symb) + shift) % len(alpha_s)]
-        elif symb in alpha_c:
-            ciphertext += alpha_c[(alpha_c.index(symb) + shift) % len(alpha_c)]
+    kw = []
+    a = 0
+    ciphertext = ''
+    for i in keyword:
+        if 65 <= ord(i) <= 90:
+            kw.insert(a, ord(i) - 65)
         else:
-            ciphertext += symb
+            kw.insert(a, ord(i) - 97)
+        a += 1
+    kwlen = a
+    a = 0
+    for j in plaintext:
+        if a >= kwlen:
+            a = 0
+        if 65 <= ord(j) <= 90:
+            ciphertext += chr((ord(j) - 65 + kw[a]) % 26 + 65)
+        else:
+            ciphertext += chr((ord(j) - 97 + kw[a]) % 26 + 97)
+        a += 1
     return ciphertext
 
 
@@ -44,25 +41,29 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
     'ATTACKATDAWN'
     """
-    plaintext = ""
-    k = 0
-    while len(keyword) < len(ciphertext):
-        keyword += keyword[k % len(keyword)]
-        k += 1
-    alpha_s = [chr(x) for x in range(ord("a"), ord("z") + 1)]
-    alpha_c = [chr(x) for x in range(ord("A"), ord("Z") + 1)]
-    for i in range(len(ciphertext)):
-        key = keyword[i]
-        shift = 0
-        if key in alpha_c:
-            shift = alpha_c.index(key)
-        elif key in alpha_s:
-            shift = alpha_s.index(key)
-        symb = ciphertext[i]
-        if symb in alpha_s:
-            plaintext += alpha_s[(alpha_s.index(symb) - shift) % len(alpha_s)]
-        elif symb in alpha_c:
-            plaintext += alpha_c[(alpha_c.index(symb) - shift) % len(alpha_c)]
+    kw = []
+    a = 0
+    plaintext = ''
+    for i in keyword:
+        if 65 <= ord(i) <= 90:
+            kw.insert(a, ord(i) - 65)
         else:
-            plaintext += symb
+            kw.insert(a, ord(i) - 97)
+        a += 1
+    kwlen = a
+    a = 0
+    for j in ciphertext:
+        if a >= kwlen:
+            a = 0
+        if 65 <= ord(j) <= 90:
+            if ord(j) - 65 - kw[a] < 0:
+                plaintext += chr((ord(j) - 65 - kw[a]) + 91)
+            else:
+                plaintext += chr(ord(j) - kw[a])
+        else:
+            if ord(j) - 97 - kw[a] < 0:
+                plaintext += chr((ord(j) - 97 - kw[a]) + 123)
+            else:
+                plaintext += chr(ord(j) - kw[a])
+        a += 1
     return plaintext
