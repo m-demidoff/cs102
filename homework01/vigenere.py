@@ -10,7 +10,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
     kw = []
     a = 0
-    ciphertext = ''
+    ciphertext = ""
     for i in keyword:
         if 65 <= ord(i) <= 90:
             kw.insert(a, ord(i) - 65)
@@ -43,7 +43,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     """
     kw = []
     a = 0
-    plaintext = ''
+    plaintext = ""
     for i in keyword:
         if 65 <= ord(i) <= 90:
             kw.insert(a, ord(i) - 65)
