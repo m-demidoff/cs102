@@ -12,20 +12,12 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    k = 0
-    for i in range(1, round(n ** (1 / 2)) + 1):
+    prime = True
+    for i in range(2, n):
         if n % i == 0:
-            k += 1
-    if n == 2:
-        n = bool(True)
-    elif n == 1:
-        n = bool(False)
-    else:
-        if k > 1:
-            n = bool(False)
-        else:
-            n = bool(True)
-    return n
+            prime = False
+            break
+    return prime
 
 
 def gcd(a: int, b: int) -> int:
@@ -44,7 +36,7 @@ def gcd(a: int, b: int) -> int:
                 m = i
     if a == 0 or b == 0:
         m = max(a, b)
-    if a == 0 and b == 0:
+    elif a == 0 and b == 0:
         m = 0
     return m
 
