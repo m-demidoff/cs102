@@ -55,7 +55,6 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    pass
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -69,7 +68,6 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    pass
 
 
 def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -84,7 +82,6 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    pass
 
 
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -102,7 +99,6 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    pass
 
 
 def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
@@ -122,7 +118,6 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     >>> find_empty_positions([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']])
     (2, 0)
     """
-    pass
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
@@ -143,7 +138,6 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     >>> values == {'2', '5', '9'}
     True
     """
-    pass
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
@@ -174,30 +168,30 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     >>> solve(grid)
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
-    pass
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
-    pos = find_empty_positions(solution)
-    if pos[0] != -1:
-        return False
-    for i in range(9):
-        for j in range(9):
-            if len(find_possible_values(solution, [i, j])) != 0:
-                return False
+    for i in range(len(solution)):
+        a = get_col(solution, (i, 0))  # столбец
+        b = get_row(solution, (0, i))  # строка
+        c = get_block(solution, (i // 3 * 3, i % 3 * 3))
+        check_row = [0 for j, row_element in enumerate(a[:-1]) if row_element in a[j + 1:]]
+        check_col = [0 for k, col_element in enumerate(b[:-1]) if col_element in b[k + 1:]]
+        check_block = [
+            0 for l, block_element in enumerate(c[:-1]) if block_element in c[l + 1:]
+        ]
+        if check_row or check_col or check_block or "." in a:
+            return False
     return True
-
     """ Если решение solution верно, то вернуть True, в противном случае False """
-    # TODO: Add doctests with bad puzzles
-    pass
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
-    N = 81 - min(81, N)
     sudoku = solve([["."] * 9 for i in range(9)])  # type: ignore
+    N = 81 - min(81, N)
     while N:
-        a = random.randint(0, 8)
-        b = random.randint(0, 8)
+        a = random.randint(0, 8)  # столбец
+        b = random.randint(0, 8)  # строка
         if sudoku is not None:
             if sudoku[a][b] != ".":
                 sudoku[a][b] = "."
@@ -225,7 +219,6 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    pass
 
 
 if __name__ == "__main__":
