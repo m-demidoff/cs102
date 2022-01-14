@@ -185,17 +185,16 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
-    sudoku = solve([["."] * 9 for i in range(9)])  # type: ignore
+    grid = solve([["."] * 9 for a in range(9)])  # type: ignore
     N = 81 - min(81, N)
     while N:
-        a = random.randint(0, 8)  # столбец
-        b = random.randint(0, 8)  # строка
-        if sudoku is not None:
-            if sudoku[b][a] != ".":
-                sudoku[b][a] = "."
+        column = random.randint(0, 8)
+        row = random.randint(0, 8)
+        if grid is not None:
+            if grid[row][column] != ".":
+                grid[row][column] = "."
                 N -= 1
-    return sudoku
-
+    return grid
     """Генерация судоку заполненного на N элементов
 
     >>> grid = generate_sudoku(40)
