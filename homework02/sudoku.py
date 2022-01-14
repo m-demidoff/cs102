@@ -184,7 +184,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
 
 
-def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
+def generate_sudoku(N: int) -> tp.Optional[tp.List[tp.List[str]]]:
     grid = solve([["."] * 9 for a in range(9)])  # type: ignore
     N = 81 - min(81, N)
     while N:
