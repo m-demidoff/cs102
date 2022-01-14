@@ -3,12 +3,12 @@ import typing as tp
 
 
 def is_prime(n: int) -> bool:
-    prime = True
-    for i in range(2, n):
+    for i in range(2, int(n ** (1 / 2)) + 1):
         if n % i == 0:
-            prime = False
-            break
-    return prime
+            return False
+    if n <= 1:
+        return False
+    return True
 
 
 def gcd(a: int, b: int) -> int:
