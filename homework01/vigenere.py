@@ -1,6 +1,3 @@
-from typing import List
-
-
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
     Encrypts plaintext using a Vigenere cipher.
@@ -11,7 +8,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     >>> encrypt_vigenere("ATTACKATDAWN", "LEMON")
     'LXFOPVEFRNHR'
     """
-    kw = []  # type: List[str]
+    kw = []
     a = 0
     ciphertext = ""
     for i in keyword:
@@ -44,7 +41,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
     'ATTACKATDAWN'
     """
-    kw = []  # type: List[str]
+    kw = []
     a = 0
     plaintext = ""
     for i in keyword:
