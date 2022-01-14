@@ -35,7 +35,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
 
 
 def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
-    a = []
+    a = []  # type: ignore
     k = 0  # начальное значение, может быть любым
     for i in range(n):
         a.append([])  # создаем пустую строку
@@ -125,11 +125,12 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
-    mas = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
-    mas -= set(get_row(grid, pos))
-    mas -= set(get_col(grid, pos))
-    mas -= set(get_block(grid, pos))
-    return list(mas)
+    return (
+        {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+        - set(get_row(grid, pos))
+        - set(get_col(grid, pos))
+        - set(get_block(grid, pos))
+    )
 
     """Вернуть множество возможных значения для указанной позиции
 
@@ -145,19 +146,20 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-    pos = find_empty_positions(grid)
-    if pos[0] == -1:
+    emptypositions = find_empty_positions(grid)
+    if emptypositions is None:
         return grid
-    possible = find_possible_values(grid, pos)
-    if len(possible) == 0:
-        return grid
-    for i in possible:
-        grid[pos[0]][pos[1]] = str(i)
-        grid = solve(grid)
-        if check_solution(grid):
-            return grid
-    grid[pos[0]][pos[1]] = "."
-    return grid
+    else:
+        a = emptypositions[0]
+        b = emptypositions[1]
+        possible = find_possible_values(grid, (a, b))
+        for i in possible:
+            grid[a][b] = i
+            ans = solve(grid)
+            if ans is not None:
+                return ans
+    grid[a][b] = "."
+    return None
 
     """ Решение пазла, заданного в grid """
     """ Как решать Судоку?
@@ -190,20 +192,14 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
-    N = 81 - N
-    new_list = []
-    for i in range(9):
-        new_list.append([])
-        for j in range(9):
-            new_list[i].append(".")
-    sudoku = solve(new_list)
-    a = 0
-    while a != N:
-        s = random.randint(0, 8)
-        m = random.randint(0, 8)
-        if sudoku[s][m] != ".":
-            sudoku[s][m] = "."
-            a += 1
+    N = 81 - min(81, N)
+    sudoku = solve([["."] * 9 for i in range(9)])  # type: ignore
+    while N:
+        a = random.randint(0, 8)
+        b = random.randint(0, 8)
+        if sudoku[a][b] != ".":
+            sudoku[a][b] = "."
+            N -= 1
     return sudoku
 
     """Генерация судоку заполненного на N элементов
