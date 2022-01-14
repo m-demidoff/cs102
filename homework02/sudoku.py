@@ -45,6 +45,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
 
     for i in a:
         return a
+    assert False
 
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
@@ -197,9 +198,10 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     while N:
         a = random.randint(0, 8)
         b = random.randint(0, 8)
-        if sudoku[a][b] != ".":
-            sudoku[a][b] = "."
-            N -= 1
+        if sudoku is not None:
+            if sudoku[a][b] != ".":
+                sudoku[a][b] = "."
+                N -= 1
     return sudoku
 
     """Генерация судоку заполненного на N элементов
