@@ -184,7 +184,6 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
                 return False
     return True
 
-
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
     pass
