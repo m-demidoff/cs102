@@ -175,9 +175,9 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
         a = get_col(solution, (i, 0))  # столбец
         b = get_row(solution, (0, i))  # строка
         c = get_block(solution, (i // 3 * 3, i % 3 * 3))
-        check_row = [0 for j, row_element in enumerate(a[:-1]) if row_element in a[j + 1:]]
-        check_col = [0 for k, col_element in enumerate(b[:-1]) if col_element in b[k + 1:]]
-        check_block = [0 for l, block_element in enumerate(c[:-1]) if block_element in c[l + 1:]]
+        check_row = [0 for j, row_element in enumerate(a[:-1]) if row_element in a[j + 1 :]]
+        check_col = [0 for k, col_element in enumerate(b[:-1]) if col_element in b[k + 1 :]]
+        check_block = [0 for l, block_element in enumerate(c[:-1]) if block_element in c[l + 1 :]]
         if check_row or check_col or check_block or "." in a:
             return False
     return True
