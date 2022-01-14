@@ -191,8 +191,8 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
         a = random.randint(0, 8)  # столбец
         b = random.randint(0, 8)  # строка
         if sudoku is not None:
-            if sudoku[a][b] != ".":
-                sudoku[a][b] = "."
+            if sudoku[b][a] != ".":
+                sudoku[b][a] = "."
                 N -= 1
     return sudoku
 
