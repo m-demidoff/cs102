@@ -172,19 +172,22 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     for i in range(len(solution)):
-        a = get_col(solution, (i, 0))  # столбец
-        b = get_row(solution, (0, i))  # строка
-        c = get_block(solution, (i // 3 * 3, i % 3 * 3))
-        check_row = [0 for j, row_element in enumerate(a[:-1]) if row_element in a[j + 1 :]]
-        check_col = [0 for k, col_element in enumerate(b[:-1]) if col_element in b[k + 1 :]]
-        check_block = [0 for l, block_element in enumerate(c[:-1]) if block_element in c[l + 1 :]]
-        if check_row or check_col or check_block or "." in a:
-            return False
+        for j in range(len(solution)):
+            a = get_row(solution, (i, j))
+            b = get_col(solution, (i, j))
+            c = get_block(solution, (i, j))
+            if (
+                len(set(a)) != len(a)
+                or len(set(b)) != len(b)
+                or len(set(c)) != len(c)
+                or solution[i][j] == "."
+            ):
+                return False
     return True
     """ Если решение solution верно, то вернуть True, в противном случае False """
 
 
-def generate_sudoku(N: int) -> tp.Optional[tp.List[tp.List[str]]]:
+def generate_sudoku(N: int):
     grid = solve([["."] * 9 for a in range(9)])  # type: ignore
     N = 81 - min(81, N)
     while N:
