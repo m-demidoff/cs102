@@ -6,7 +6,7 @@ T = tp.TypeVar("T")
 
 
 def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
-    """ Прочитать Судоку из указанного файла """
+    """Прочитать Судоку из указанного файла"""
     path = pathlib.Path(path)
     with path.open() as f:
         puzzle = f.read()
@@ -20,7 +20,7 @@ def create_grid(puzzle: str) -> tp.List[tp.List[str]]:
 
 
 def display(grid: tp.List[tp.List[str]]) -> None:
-    """Вывод Судоку """
+    """Вывод Судоку"""
     width = 2
     line = "+".join(["-" * (width * 3)] * 3)
     for row in range(9):
@@ -44,7 +44,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
             k += 1  # увеличиваем значение счетчика
 
     for i in a:
-        return(a)
+        return a
 
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
@@ -74,7 +74,6 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
 def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
     return [x[pos[1]] for x in grid]
 
-
     """Возвращает все значения для номера столбца, указанного в pos
 
     >>> get_col([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
@@ -90,7 +89,7 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
     col = pos[0] - pos[0] % 3
     row = pos[1] - pos[1] % 3
-    return [grid[i][j] for i in range(col,  col+ 3) for j in range(row, row + 3)]
+    return [grid[i][j] for i in range(col,  col + 3) for j in range(row, row + 3)]
 
     """Возвращает все значения из квадрата, в который попадает позиция pos
 
@@ -109,7 +108,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     n = len(grid[0])
     for i in range(n):
         for j in range(n):
-            if (grid[i][j] == '.'):
+            if grid[i][j] == ".":
                 return (i, j)
     return (-1, -1)
 
@@ -126,7 +125,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
-    mas = {'1','2','3','4','5','6','7','8','9'}
+    mas = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
     mas -= set(get_row(grid, pos))
     mas -= set(get_col(grid, pos))
     mas -= set(get_block(grid, pos))
@@ -157,7 +156,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         grid = solve(grid)
         if check_solution(grid):
             return grid
-    grid[pos[0]][pos[1]] = '.'
+    grid[pos[0]][pos[1]] = "."
     return grid
 
     """ Решение пазла, заданного в grid """
@@ -181,7 +180,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
         return False
     for i in range(9):
         for j in range(9):
-            if len(find_possible_values(solution, [i,j]))!= 0:
+            if len(find_possible_values(solution, [i,j])) != 0:
                 return False
     return True
 
@@ -196,15 +195,15 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     new_list = []
     for i in range(9):
         new_list.append([])
-        for j in range (9):
-            new_list[i].append('.')
+        for j in range(9):
+            new_list[i].append(".")
     sudoku = solve(new_list)
     a = 0
     while a != N:
         s = random.randint(0, 8)
         m = random.randint(0, 8)
-        if sudoku[s][m] != '.':
-            sudoku[s][m] = '.'
+        if sudoku[s][m] != ".":
+            sudoku[s][m] = "."
             a += 1
     return sudoku
 
