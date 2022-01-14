@@ -89,7 +89,7 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
     col = pos[0] - pos[0] % 3
     row = pos[1] - pos[1] % 3
-    return [grid[i][j] for i in range(col,  col + 3) for j in range(row, row + 3)]
+    return [grid[i][j] for i in range(col, col + 3) for j in range(row, row + 3)]
 
     """Возвращает все значения из квадрата, в который попадает позиция pos
 
@@ -180,7 +180,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
         return False
     for i in range(9):
         for j in range(9):
-            if len(find_possible_values(solution, [i,j])) != 0:
+            if len(find_possible_values(solution, [i, j])) != 0:
                 return False
     return True
 
