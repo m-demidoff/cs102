@@ -5,6 +5,7 @@ import typing as tp
 def is_prime(n: int) -> bool:
     """
     Tests to see if a number is prime.
+
     >>> is_prime(2)
     True
     >>> is_prime(11)
@@ -23,46 +24,35 @@ def is_prime(n: int) -> bool:
 def gcd(a: int, b: int) -> int:
     """
     Euclid's algorithm for determining the greatest common divisor.
+
     >>> gcd(12, 15)
     3
     >>> gcd(3, 7)
     1
     """
-    c = min(a, b)
-    m = 1
-    for i in range(1, c + 1):
-        if a % i == 0 and b % i == 0:
-            if i > m:
-                m = i
-    if a == 0 or b == 0:
-        m = max(a, b)
-    elif a == 0 and b == 0:
-        m = 0
-    return m
+    while b:
+        a %= b
+        a, b = b, a
+    return a
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
     """
     Euclid's extended algorithm for finding the multiplicative
     inverse of two numbers.
+
     >>> multiplicative_inverse(7, 40)
     23
     """
-    delen: list = []
-    phi1 = phi
-    delen.insert(0, phi // e)
-    while phi % e != 0:
-        c = phi % e
-        phi = e
-        e = c
-        delen.insert(0, phi // e)
-    x = 0
-    y = 1
-    for i in range(1, len(delen)):
-        x1 = y
-        y = x - x1 * delen[i]
-        x = x1
-    return y % phi1
+    z = phi
+    x, xx, y, yy = (1, 0, 0, 1)
+    while phi:
+        q = e // phi
+        e, phi = phi, e % phi
+        x, xx = xx, x - xx * q
+        y, yy = yy, y - yy * q
+    result = x % z
+    return result
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
