@@ -1,6 +1,7 @@
-def encrypt_vigenere(plaintext: str, keyword: str) -> str:
+def encrypt_vigenere(plaintext, keyword):
     """
     Encrypts plaintext using a Vigenere cipher.
+
     >>> encrypt_vigenere("PYTHON", "A")
     'PYTHON'
     >>> encrypt_vigenere("python", "a")
@@ -10,7 +11,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
     kw = []  # type: ignore
     a = 0
-    ciphertext = ""
+    ciphertext = ''
     for i in keyword:
         if 65 <= ord(i) <= 90:
             kw.insert(a, ord(i) - 65)
@@ -30,20 +31,20 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     return ciphertext
 
 
-def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
+def decrypt_vigenere(ciphertext, keyword):
     """
-    Decrypts a ciphertext using a Vigenere cipher.
-
-    >>> decrypt_vigenere("PYTHON", "A")
-    'PYTHON'
-    >>> decrypt_vigenere("python", "a")
-    'python'
-    >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
-    'ATTACKATDAWN'
-    """
+   Decrypts a ciphertext using a Vigenere cipher.
+   
+   >>> decrypt_vigenere("PYTHON", "A")
+   'PYTHON'
+   >>> decrypt_vigenere("python", "a")
+   'python'
+   >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
+   'ATTACKATDAWN'
+   """
     kw = []  # type: ignore
     a = 0
-    plaintext = ""
+    plaintext = ''
     for i in keyword:
         if 65 <= ord(i) <= 90:
             kw.insert(a, ord(i) - 65)
