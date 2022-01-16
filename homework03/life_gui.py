@@ -52,7 +52,7 @@ class GUI(UI):
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.KEYDOWN:
-                    paused = not paused
+                    paused = not paused  # type: ignore
                 elif event.type == pygame.MOUSEBUTTONUP:
                     i, j = event.pos
                     i = i // self.cell_size
