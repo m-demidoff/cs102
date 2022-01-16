@@ -98,7 +98,7 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
     """
     rows = len(grid)
     cols = len(grid[0])
-    for x, _ in enumerate(rows):
+    for x, _ in enumerate(rows):  # type: ignore
         for y in range(cols):
             if grid[x][y] == k:
                 if x - 1 >= 0 and grid[x - 1][y] == 0:
@@ -166,9 +166,7 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
     return False
 
 
-def solve_maze(
-    grid: List[List[Union[str, int]]],
-) -> Tuple[List[List[Union[str, int]]], Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]]:
+def solve_maze(grid):
     """
 
     :param grid:
@@ -187,7 +185,7 @@ def solve_maze(
             k = 1
 
             for x in range(len(grid) - 1):
-                for y in range(len(grid[y]) - 1):
+                for y in range(len(grid[y]) - 1):  # type: ignore
                     if grid[x][y] == " ":
                         grid[x][y] = 0
 
