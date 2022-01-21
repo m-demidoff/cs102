@@ -32,6 +32,7 @@ def remove_wall(
 
     return grid
 
+
 def bin_tree_maze(
     rows: int = 15, cols: int = 15, random_exit: bool = True
 ) -> List[List[Union[str, int]]]:
@@ -62,7 +63,6 @@ def bin_tree_maze(
         grid = remove_wall(grid, cell)
 
     # генерация входа и выхода
-    
     if random_exit:
         x_in, x_out = randint(0, rows - 1), randint(0, rows - 1)
         y_in = randint(0, cols - 1) if x_in in (0, rows - 1) else choice((0, cols - 1))
