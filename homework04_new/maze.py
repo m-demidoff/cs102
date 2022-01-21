@@ -17,8 +17,8 @@ def remove_wall(
     :param coord:
     :return:
     """
+    y, x = coord
     way = randint(0, 1)  # направление
-    x, y = coord
     if way:
         if x + 1 != len(grid[0]) - 1:
             grid[y][x + 1] = " "
@@ -27,7 +27,7 @@ def remove_wall(
     else:
         if y != 1:
             grid[y - 1][x] = " "
-        elif y + 1 != len(grid[0]) - 1:
+        elif x + 1 != len(grid[0]) - 1:
             grid[y][x + 1] = " "
 
     return grid
@@ -37,7 +37,6 @@ def bin_tree_maze(
     rows: int = 15, cols: int = 15, random_exit: bool = True
 ) -> List[List[Union[str, int]]]:
     """
-
     :param rows:
     :param cols:
     :param random_exit:
@@ -61,6 +60,7 @@ def bin_tree_maze(
     for _, cell in enumerate(empty_cells):
         grid = remove_wall(grid, cell)
 
+    # генерация входа и выхода
     if random_exit:
         x_in, x_out = randint(0, rows - 1), randint(0, rows - 1)
         y_in = randint(0, cols - 1) if x_in in (0, rows - 1) else choice((0, cols - 1))
