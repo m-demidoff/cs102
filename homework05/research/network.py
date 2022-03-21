@@ -5,8 +5,7 @@ import community as community_louvain
 import matplotlib.pyplot as plt
 import networkx as nx
 import pandas as pd
-
-from vkapi.friends import get_friends, get_mutual
+from vkapi.friends import MutualFriends, get_friends, get_mutual
 
 
 def ego_network(
@@ -18,7 +17,21 @@ def ego_network(
     :param user_id: Идентификатор пользователя, для которого строится граф друзей.
     :param friends: Идентификаторы друзей, между которыми устанавливаются связи.
     """
-    pass
+    friends_graph = []
+    if friends is None:
+        friends_fields: tp.List[tp.Dict[str, tp.Any]] = get_friends(user_id, fields=["nickname", "is_closed, deactivate"]).items  # type: ignore
+
+        friends = [
+            friend["id"]
+            for friend in friends_fields
+            if not (friend.get("deactivate") or friend.get("is_closed"))
+        ]
+    mutuals = get_mutual(user_id, target_uids=friends)
+    for mutual in mutuals:
+        mut = tp.cast(MutualFriends, mutual)
+        for common in mut["common_friends"]:
+            friends_graph.append((mut["id"], common))
+    return friends_graph
 
 
 def plot_ego_network(net: tp.List[tp.Tuple[int, int]]) -> None:
@@ -66,3 +79,15 @@ def describe_communities(
                     data.append([cluster_n] + [friend.get(field) for field in fields])  # type: ignore
                     break
     return pd.DataFrame(data=data, columns=["cluster"] + fields)
+
+
+if __name__ == "__main__":
+    net = ego_network(
+        friends=[
+            242206197,
+            290296629,
+        ]
+    )
+
+    print(net)
+    plot_ego_network(net)
