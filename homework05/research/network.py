@@ -19,7 +19,7 @@ def ego_network(
     """
     friends_graph = []
     if friends is None:
-        friends_fields: tp.List[tp.Dict[str, tp.Any]] = get_friends(user_id, fields=["nickname","is_closed, deactivate"]).items  # type: ignore
+        friends_fields: tp.List[tp.Dict[str, tp.Any]] = get_friends(user_id, fields=["nickname", "is_closed, deactivate"]).items  # type: ignore
 
         friends = [
             friend["id"]
@@ -86,12 +86,8 @@ if __name__ == "__main__":
         friends=[
             242206197,
             290296629,
-
-
         ]
     )
 
     print(net)
     plot_ego_network(net)
-
-
