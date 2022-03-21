@@ -71,6 +71,6 @@ def get_wall_execute(
 
 
 if __name__ == "__main__":
-    wall = get_wall_execute(owner_id=338503155, domain="davno_na_blesse", count=3)
+    wall = get_wall_execute(owner_id=338503155, domain="davno_na_blesse", count=3)  # type:ignore
 
     print(wall)
